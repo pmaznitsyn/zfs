@@ -1,0 +1,608 @@
+Script started on 2024-04-18 15:09:37+00:00
+]0;root@zfs:~[root@zfs ~]# rebootmodprobe zfs[19@yum-config-manager --enabl[C[C[C[C[Cdisable zfs-kmod[C[C[C[C[C[C[C[C[C[C[C[C[C[Chttp://download.zfsonlinux.org/epel/zfs-release.el8_9.noarch.rpm[2P.noarch.rpm[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmodprobe zfs[K[6@yum install -y[C[C[C[C-config-manager --enable zfs-kmod[4Pdisable zfs[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[12@ install -y epel-release kernel-devel[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux[C[C[C[C[C[C[C[C[C[C[C[C[C[Cyum install -y http://download.zfsonlinux.org/epel/zfs-release.el7_8.noarch.rpm[C[C[C[C[C[C[C[C[C[C[C[C[C[C/sbin/modprobe zfs[K[C[C[C[C[C[C[C[C[C[C[C[C[C[Czpool create otus1 mirror /dev/sdb /dev/sdc
+]0;root@zfs:~[root@zfs ~]# zpool create otus2 mirror /dev/sdd /dev/sde
+]0;root@zfs:~[root@zfs ~]# zpool create otus3 mirror /dev/sdf /dev/sdg
+]0;root@zfs:~[root@zfs ~]# zpool create otus4 mirror /dev/sdh /dev/sdi
+]0;root@zfs:~[root@zfs ~]# zpool list
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+otus1   480M   104K   480M        -         -     0%     0%  1.00x    ONLINE  -
+otus2   480M    99K   480M        -         -     0%     0%  1.00x    ONLINE  -
+otus3   480M   104K   480M        -         -     0%     0%  1.00x    ONLINE  -
+otus4   480M   105K   480M        -         -     0%     0%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zfs set compression=lzjb otus1
+]0;root@zfs:~[root@zfs ~]# zfs set compression=lz4 otus2
+]0;root@zfs:~[root@zfs ~]# zfs set compression=gzip-9 otus3
+]0;root@zfs:~[root@zfs ~]# zfs set compression=zle otus4
+]0;root@zfs:~[root@zfs ~]# zfs get all | grep compression
+otus1  [01;31m[Kcompression[m[K           lzjb                   local
+otus2  [01;31m[Kcompression[m[K           lz4                    local
+otus3  [01;31m[Kcompression[m[K           gzip-9                 local
+otus4  [01;31m[Kcompression[m[K           zle                    local
+]0;root@zfs:~[root@zfs ~]# zfs get all
+NAME   PROPERTY              VALUE                  SOURCE
+otus1  type                  filesystem             -
+otus1  creation              Thu Apr 18 15:20 2024  -
+otus1  used                  118K                   -
+otus1  available             352M                   -
+otus1  referenced            24K                    -
+otus1  compressratio         1.00x                  -
+otus1  mounted               yes                    -
+otus1  quota                 none                   default
+otus1  reservation           none                   default
+otus1  recordsize            128K                   default
+otus1  mountpoint            /otus1                 default
+otus1  sharenfs              off                    default
+otus1  checksum              on                     default
+otus1  compression           lzjb                   local
+otus1  atime                 on                     default
+otus1  devices               on                     default
+otus1  exec                  on                     default
+otus1  setuid                on                     default
+otus1  readonly              off                    default
+otus1  zoned                 off                    default
+otus1  snapdir               hidden                 default
+otus1  aclmode               discard                default
+otus1  aclinherit            restricted             default
+otus1  createtxg             1                      -
+otus1  canmount              on                     default
+otus1  xattr                 on                     default
+otus1  copies                1                      default
+otus1  version               5                      -
+otus1  utf8only              off                    -
+otus1  normalization         none                   -
+otus1  casesensitivity       sensitive              -
+otus1  vscan                 off                    default
+otus1  nbmand                off                    default
+otus1  sharesmb              off                    default
+otus1  refquota              none                   default
+otus1  refreservation        none                   default
+otus1  guid                  4882904711303997761    -
+otus1  primarycache          all                    default
+otus1  secondarycache        all                    default
+otus1  usedbysnapshots       0B                     -
+otus1  usedbydataset         24K                    -
+otus1  usedbychildren        94.5K                  -
+otus1  usedbyrefreservation  0B                     -
+otus1  logbias               latency                default
+otus1  objsetid              54                     -
+otus1  dedup                 off                    default
+otus1  mlslabel              none                   default
+otus1  sync                  standard               default
+otus1  dnodesize             legacy                 default
+otus1  refcompressratio      1.00x                  -
+otus1  written               24K                    -
+otus1  logicalused           43.5K                  -
+otus1  logicalreferenced     12K                    -
+otus1  volmode               default                default
+otus1  filesystem_limit      none                   default
+otus1  snapshot_limit        none                   default
+otus1  filesystem_count      none                   default
+otus1  snapshot_count        none                   default
+otus1  snapdev               hidden                 default
+otus1  acltype               off                    default
+otus1  context               none                   default
+otus1  fscontext             none                   default
+otus1  defcontext            none                   default
+otus1  rootcontext           none                   default
+otus1  relatime              off                    default
+otus1  redundant_metadata    all                    default
+otus1  overlay               on                     default
+otus1  encryption            off                    default
+otus1  keylocation           none                   default
+otus1  keyformat             none                   default
+otus1  pbkdf2iters           0                      default
+otus1  special_small_blocks  0                      default
+otus2  type                  filesystem             -
+otus2  creation              Thu Apr 18 15:34 2024  -
+otus2  used                  111K                   -
+otus2  available             352M                   -
+otus2  referenced            24K                    -
+otus2  compressratio         1.00x                  -
+otus2  mounted               yes                    -
+otus2  quota                 none                   default
+otus2  reservation           none                   default
+otus2  recordsize            128K                   default
+otus2  mountpoint            /otus2                 default
+otus2  sharenfs              off                    default
+otus2  checksum              on                     default
+otus2  compression           lz4                    local
+otus2  atime                 on                     default
+otus2  devices               on                     default
+otus2  exec                  on                     default
+otus2  setuid                on                     default
+otus2  readonly              off                    default
+otus2  zoned                 off                    default
+otus2  snapdir               hidden                 default
+otus2  aclmode               discard                default
+otus2  aclinherit            restricted             default
+otus2  createtxg             1                      -
+otus2  canmount              on                     default
+otus2  xattr                 on                     default
+otus2  copies                1                      default
+otus2  version               5                      -
+otus2  utf8only              off                    -
+otus2  normalization         none                   -
+otus2  casesensitivity       sensitive              -
+otus2  vscan                 off                    default
+otus2  nbmand                off                    default
+otus2  sharesmb              off                    default
+otus2  refquota              none                   default
+otus2  refreservation        none                   default
+otus2  guid                  16532079406517286266   -
+otus2  primarycache          all                    default
+otus2  secondarycache        all                    default
+otus2  usedbysnapshots       0B                     -
+otus2  usedbydataset         24K                    -
+otus2  usedbychildren        87K                    -
+otus2  usedbyrefreservation  0B                     -
+otus2  logbias               latency                default
+otus2  objsetid              54                     -
+otus2  dedup                 off                    default
+otus2  mlslabel              none                   default
+otus2  sync                  standard               default
+otus2  dnodesize             legacy                 default
+otus2  refcompressratio      1.00x                  -
+otus2  written               24K                    -
+otus2  logicalused           41K                    -
+otus2  logicalreferenced     12K                    -
+otus2  volmode               default                default
+otus2  filesystem_limit      none                   default
+otus2  snapshot_limit        none                   default
+otus2  filesystem_count      none                   default
+otus2  snapshot_count        none                   default
+otus2  snapdev               hidden                 default
+otus2  acltype               off                    default
+otus2  context               none                   default
+otus2  fscontext             none                   default
+otus2  defcontext            none                   default
+otus2  rootcontext           none                   default
+otus2  relatime              off                    default
+otus2  redundant_metadata    all                    default
+otus2  overlay               on                     default
+otus2  encryption            off                    default
+otus2  keylocation           none                   default
+otus2  keyformat             none                   default
+otus2  pbkdf2iters           0                      default
+otus2  special_small_blocks  0                      default
+otus3  type                  filesystem             -
+otus3  creation              Thu Apr 18 15:34 2024  -
+otus3  used                  118K                   -
+otus3  available             352M                   -
+otus3  referenced            24K                    -
+otus3  compressratio         1.00x                  -
+otus3  mounted               yes                    -
+otus3  quota                 none                   default
+otus3  reservation           none                   default
+otus3  recordsize            128K                   default
+otus3  mountpoint            /otus3                 default
+otus3  sharenfs              off                    default
+otus3  checksum              on                     default
+otus3  compression           gzip-9                 local
+otus3  atime                 on                     default
+otus3  devices               on                     default
+otus3  exec                  on                     default
+otus3  setuid                on                     default
+otus3  readonly              off                    default
+otus3  zoned                 off                    default
+otus3  snapdir               hidden                 default
+otus3  aclmode               discard                default
+otus3  aclinherit            restricted             default
+otus3  createtxg             1                      -
+otus3  canmount              on                     default
+otus3  xattr                 on                     default
+otus3  copies                1                      default
+otus3  version               5                      -
+otus3  utf8only              off                    -
+otus3  normalization         none                   -
+otus3  casesensitivity       sensitive              -
+otus3  vscan                 off                    default
+otus3  nbmand                off                    default
+otus3  sharesmb              off                    default
+otus3  refquota              none                   default
+otus3  refreservation        none                   default
+otus3  guid                  1494406729557025642    -
+otus3  primarycache          all                    default
+otus3  secondarycache        all                    default
+otus3  usedbysnapshots       0B                     -
+otus3  usedbydataset         24K                    -
+otus3  usedbychildren        94.5K                  -
+otus3  usedbyrefreservation  0B                     -
+otus3  logbias               latency                default
+otus3  objsetid              54                     -
+otus3  dedup                 off                    default
+otus3  mlslabel              none                   default
+otus3  sync                  standard               default
+otus3  dnodesize             legacy                 default
+otus3  refcompressratio      1.00x                  -
+otus3  written               24K                    -
+otus3  logicalused           43.5K                  -
+otus3  logicalreferenced     12K                    -
+otus3  volmode               default                default
+otus3  filesystem_limit      none                   default
+otus3  snapshot_limit        none                   default
+otus3  filesystem_count      none                   default
+otus3  snapshot_count        none                   default
+otus3  snapdev               hidden                 default
+otus3  acltype               off                    default
+otus3  context               none                   default
+otus3  fscontext             none                   default
+otus3  defcontext            none                   default
+otus3  rootcontext           none                   default
+otus3  relatime              off                    default
+otus3  redundant_metadata    all                    default
+otus3  overlay               on                     default
+otus3  encryption            off                    default
+otus3  keylocation           none                   default
+otus3  keyformat             none                   default
+otus3  pbkdf2iters           0                      default
+otus3  special_small_blocks  0                      default
+otus4  type                  filesystem             -
+otus4  creation              Thu Apr 18 15:34 2024  -
+otus4  used                  118K                   -
+otus4  available             352M                   -
+otus4  referenced            24K                    -
+otus4  compressratio         1.00x                  -
+otus4  mounted               yes                    -
+otus4  quota                 none                   default
+otus4  reservation           none                   default
+otus4  recordsize            128K                   default
+otus4  mountpoint            /otus4                 default
+otus4  sharenfs              off                    default
+otus4  checksum              on                     default
+otus4  compression           zle                    local
+otus4  atime                 on                     default
+otus4  devices               on                     default
+otus4  exec                  on                     default
+otus4  setuid                on                     default
+otus4  readonly              off                    default
+otus4  zoned                 off                    default
+otus4  snapdir               hidden                 default
+otus4  aclmode               discard                default
+otus4  aclinherit            restricted             default
+otus4  createtxg             1                      -
+otus4  canmount              on                     default
+otus4  xattr                 on                     default
+otus4  copies                1                      default
+otus4  version               5                      -
+otus4  utf8only              off                    -
+otus4  normalization         none                   -
+otus4  casesensitivity       sensitive              -
+otus4  vscan                 off                    default
+otus4  nbmand                off                    default
+otus4  sharesmb              off                    default
+otus4  refquota              none                   default
+otus4  refreservation        none                   default
+otus4  guid                  17432836209831042503   -
+otus4  primarycache          all                    default
+otus4  secondarycache        all                    default
+otus4  usedbysnapshots       0B                     -
+otus4  usedbydataset         24K                    -
+otus4  usedbychildren        94.5K                  -
+otus4  usedbyrefreservation  0B                     -
+otus4  logbias               latency                default
+otus4  objsetid              54                     -
+otus4  dedup                 off                    default
+otus4  mlslabel              none                   default
+otus4  sync                  standard               default
+otus4  dnodesize             legacy                 default
+otus4  refcompressratio      1.00x                  -
+otus4  written               24K                    -
+otus4  logicalused           43.5K                  -
+otus4  logicalreferenced     12K                    -
+otus4  volmode               default                default
+otus4  filesystem_limit      none                   default
+otus4  snapshot_limit        none                   default
+otus4  filesystem_count      none                   default
+otus4  snapshot_count        none                   default
+otus4  snapdev               hidden                 default
+otus4  acltype               off                    default
+otus4  context               none                   default
+otus4  fscontext             none                   default
+otus4  defcontext            none                   default
+otus4  rootcontext           none                   default
+otus4  relatime              off                    default
+otus4  redundant_metadata    all                    default
+otus4  overlay               on                     default
+otus4  encryption            off                    default
+otus4  keylocation           none                   default
+otus4  keyformat             none                   default
+otus4  pbkdf2iters           0                      default
+otus4  special_small_blocks  0                      default
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# ls
+typescript
+]0;root@zfs:~[root@zfs ~]# ls /
+[0m[38;5;51mbin[0m  [38;5;33mboot[0m  [38;5;33mdev[0m  [38;5;33metc[0m  [38;5;33mhome[0m  [38;5;51mlib[0m  [38;5;51mlib64[0m  [38;5;33mmedia[0m  [38;5;33mmnt[0m  [38;5;33mopt[0m  [38;5;33motus1[0m  [38;5;33motus2[0m  [38;5;33motus3[0m  [38;5;33motus4[0m  [38;5;33mproc[0m  [38;5;33mroot[0m  [38;5;33mrun[0m  [38;5;51msbin[0m  [38;5;33msrv[0m  [38;5;33msys[0m  [48;5;10;38;5;16mtmp[0m  [38;5;33musr[0m  [38;5;33mvar[0m
+]0;root@zfs:~[root@zfs ~]# for i in {1..4}; do wget -P /otus$i https://gutenberg.org/cache/epub/2600/pg2600.converter.log; done
+--2024-04-18 15:39:56--  https://gutenberg.org/cache/epub/2600/pg2600.converter.log
+Resolving gutenberg.org (gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to gutenberg.org (gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 41034307 (39M) [text/plain]
+Saving to: ‘/otus1/pg2600.converter.log’
+
+pg2600.converter.log                       0%[                                                                                   ]       0  --.-KB/s               pg2600.converter.log                       0%[                                                                                   ]  49.61K   161KB/s               pg2600.converter.log                       0%[                                                                                   ] 174.52K   336KB/s               pg2600.converter.log                       1%[                                                                                   ] 429.52K   522KB/s               pg2600.converter.log                       2%[=>                                                                                 ]   1.15M  1.12MB/s               pg2600.converter.log                       6%[====>                                                                              ]   2.41M  1.97MB/s               pg2600.converter.log                       7%[=====>                                                                             ]   2.83M  1.87MB/s               pg2600.converter.log                      14%[==========>                                                                        ]   5.51M  3.22MB/s               pg2600.converter.log                      18%[==============>                                                                    ]   7.25M  3.47MB/s               pg2600.converter.log                      25%[====================>                                                              ]  10.15M  4.14MB/s               pg2600.converter.log                      32%[==========================>                                                        ]  12.84M  4.82MB/s               pg2600.converter.log                      36%[=============================>                                                     ]  14.18M  4.91MB/s               pg2600.converter.log                      36%[=============================>                                                     ]  14.27M  4.26MB/s    eta 6s     pg2600.converter.log                      46%[=====================================>                                             ]  18.25M  5.14MB/s    eta 6s     pg2600.converter.log                      50%[========================================>                                          ]  19.76M  5.26MB/s    eta 6s     pg2600.converter.log                      53%[===========================================>                                       ]  21.01M  5.30MB/s    eta 6s     pg2600.converter.log                      57%[==============================================>                                    ]  22.43M  5.60MB/s    eta 6s     pg2600.converter.log                      60%[=================================================>                                 ]  23.81M  5.89MB/s    eta 3s     pg2600.converter.log                      64%[====================================================>                              ]  25.35M  6.21MB/s    eta 3s     pg2600.converter.log                      68%[========================================================>                          ]  26.91M  6.50MB/s    eta 3s     pg2600.converter.log                      72%[==========================================================>                        ]  28.27M  6.19MB/s    eta 2s     pg2600.converter.log                      83%[====================================================================>              ]  32.67M  6.94MB/s    eta 2s     pg2600.converter.log                      87%[=======================================================================>           ]  34.13M  7.25MB/s    eta 2s     pg2600.converter.log                      91%[==========================================================================>        ]  35.67M  7.07MB/s    eta 2s     pg2600.converter.log                      95%[=============================================================================>     ]  37.21M  7.23MB/s    eta 2s     pg2600.converter.log                      98%[=================================================================================> ]  38.74M  6.81MB/s    eta 0s     pg2600.converter.log                     100%[==================================================================================>]  39.13M  6.84MB/s    in 6.5s    
+
+2024-04-18 15:40:03 (6.04 MB/s) - ‘/otus1/pg2600.converter.log’ saved [41034307/41034307]
+
+--2024-04-18 15:40:03--  https://gutenberg.org/cache/epub/2600/pg2600.converter.log
+Resolving gutenberg.org (gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to gutenberg.org (gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 41034307 (39M) [text/plain]
+Saving to: ‘/otus2/pg2600.converter.log’
+
+pg2600.converter.log                       0%[                                                                                   ]       0  --.-KB/s               pg2600.converter.log                       0%[                                                                                   ]  65.55K   192KB/s               pg2600.converter.log                       0%[                                                                                   ] 298.64K   541KB/s               pg2600.converter.log                       1%[>                                                                                  ] 665.20K   784KB/s               pg2600.converter.log                       3%[==>                                                                                ]   1.46M  1.39MB/s               pg2600.converter.log                       5%[===>                                                                               ]   2.22M  1.71MB/s               pg2600.converter.log                      11%[========>                                                                          ]   4.35M  2.84MB/s               pg2600.converter.log                      13%[==========>                                                                        ]   5.41M  3.12MB/s               pg2600.converter.log                      16%[============>                                                                      ]   6.52M  3.36MB/s               pg2600.converter.log                      19%[===============>                                                                   ]   7.67M  3.59MB/s               pg2600.converter.log                      22%[=================>                                                                 ]   8.70M  3.65MB/s               pg2600.converter.log                      25%[===================>                                                               ]   9.79M  3.78MB/s               pg2600.converter.log                      28%[======================>                                                            ]  11.05M  3.97MB/s               pg2600.converter.log                      31%[=========================>                                                         ]  12.29M  4.12MB/s               pg2600.converter.log                      34%[===========================>                                                       ]  13.44M  4.16MB/s    eta 6s     pg2600.converter.log                      36%[=============================>                                                     ]  14.27M  3.89MB/s    eta 6s     pg2600.converter.log                      43%[===================================>                                               ]  17.19M  4.64MB/s    eta 6s     pg2600.converter.log                      46%[======================================>                                            ]  18.39M  4.89MB/s    eta 6s     pg2600.converter.log                      50%[========================================>                                          ]  19.59M  5.33MB/s    eta 4s     pg2600.converter.log                      53%[===========================================>                                       ]  20.87M  5.53MB/s    eta 4s     pg2600.converter.log                      56%[==============================================>                                    ]  22.22M  5.69MB/s    eta 4s     pg2600.converter.log                      60%[=================================================>                                 ]  23.61M  5.93MB/s    eta 4s     pg2600.converter.log                      63%[===================================================>                               ]  24.82M  5.65MB/s    eta 4s     pg2600.converter.log                      66%[======================================================>                            ]  26.05M  5.75MB/s    eta 3s     pg2600.converter.log                      69%[=========================================================>                         ]  27.36M  5.83MB/s    eta 3s     pg2600.converter.log                      72%[==========================================================>                        ]  28.27M  5.48MB/s    eta 3s     pg2600.converter.log                      80%[=================================================================>                 ]  31.34M  6.01MB/s    eta 3s     pg2600.converter.log                      83%[====================================================================>              ]  32.74M  6.06MB/s    eta 1s     pg2600.converter.log                      86%[======================================================================>            ]  33.94M  6.04MB/s    eta 1s     pg2600.converter.log                      90%[==========================================================================>        ]  35.39M  6.12MB/s    eta 1s     pg2600.converter.log                      94%[=============================================================================>     ]  36.83M  6.22MB/s    eta 1s     pg2600.converter.log                      97%[================================================================================>  ]  38.28M  6.81MB/s    eta 1s     pg2600.converter.log                     100%[==================================================================================>]  39.13M  6.35MB/s    in 7.4s    
+
+2024-04-18 15:40:12 (5.31 MB/s) - ‘/otus2/pg2600.converter.log’ saved [41034307/41034307]
+
+--2024-04-18 15:40:12--  https://gutenberg.org/cache/epub/2600/pg2600.converter.log
+Resolving gutenberg.org (gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to gutenberg.org (gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 41034307 (39M) [text/plain]
+Saving to: ‘/otus3/pg2600.converter.log’
+
+pg2600.converter.log                       0%[                                                                                   ]       0  --.-KB/s               pg2600.converter.log                       0%[                                                                                   ]  49.61K   148KB/s               pg2600.converter.log                       0%[                                                                                   ] 222.33K   394KB/s               pg2600.converter.log                       1%[                                                                                   ] 477.33K   555KB/s               pg2600.converter.log                       3%[=>                                                                                 ]   1.19M  1.11MB/s               pg2600.converter.log                       6%[====>                                                                              ]   2.60M  2.05MB/s               pg2600.converter.log                       7%[=====>                                                                             ]   2.99M  1.91MB/s               pg2600.converter.log                      16%[============>                                                                      ]   6.29M  3.53MB/s               pg2600.converter.log                      17%[=============>                                                                     ]   6.75M  3.30MB/s               pg2600.converter.log                      24%[===================>                                                               ]   9.74M  4.34MB/s               pg2600.converter.log                      28%[======================>                                                            ]  11.02M  4.44MB/s               pg2600.converter.log                      29%[=======================>                                                           ]  11.72M  4.16MB/s               pg2600.converter.log                      36%[============================>                                                      ]  14.10M  4.66MB/s    eta 5s     pg2600.converter.log                      36%[=============================>                                                     ]  14.27M  2.19MB/s    eta 11s    pg2600.converter.log                      53%[===========================================>                                       ]  20.93M  3.12MB/s    eta 11s    pg2600.converter.log                      54%[============================================>                                      ]  21.46M  3.05MB/s    eta 11s    pg2600.converter.log                      59%[================================================>                                  ]  23.24M  3.21MB/s    eta 11s    pg2600.converter.log                      61%[==================================================>                                ]  24.15M  3.25MB/s    eta 11s    pg2600.converter.log                      64%[====================================================>                              ]  25.12M  3.33MB/s    eta 4s     pg2600.converter.log                      66%[=====================================================>                             ]  25.85M  3.48MB/s    eta 4s     pg2600.converter.log                      68%[=======================================================>                           ]  26.75M  3.57MB/s    eta 4s     pg2600.converter.log                      70%[=========================================================>                         ]  27.52M  2.51MB/s    eta 5s     pg2600.converter.log                      84%[=====================================================================>             ]  33.20M  2.94MB/s    eta 5s     pg2600.converter.log                      87%[=======================================================================>           ]  34.19M  2.98MB/s    eta 5s     pg2600.converter.log                      89%[=========================================================================>         ]  35.02M  2.82MB/s    eta 5s     pg2600.converter.log                      91%[==========================================================================>        ]  35.83M  2.66MB/s    eta 5s     pg2600.converter.log                      94%[=============================================================================>     ]  36.89M  2.58MB/s    eta 1s     pg2600.converter.log                      97%[===============================================================================>   ]  37.97M  2.58MB/s    eta 1s     pg2600.converter.log                      99%[=================================================================================> ]  39.06M  2.66MB/s    eta 1s     pg2600.converter.log                     100%[==================================================================================>]  39.13M  2.47MB/s    in 13s     
+
+2024-04-18 15:40:26 (2.96 MB/s) - ‘/otus3/pg2600.converter.log’ saved [41034307/41034307]
+
+--2024-04-18 15:40:26--  https://gutenberg.org/cache/epub/2600/pg2600.converter.log
+Resolving gutenberg.org (gutenberg.org)... 152.19.134.47, 2610:28:3090:3000:0:bad:cafe:47
+Connecting to gutenberg.org (gutenberg.org)|152.19.134.47|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 41034307 (39M) [text/plain]
+Saving to: ‘/otus4/pg2600.converter.log’
+
+pg2600.converter.log                       0%[                                                                                   ]       0  --.-KB/s               pg2600.converter.log                       0%[                                                                                   ]  78.89K   235KB/s               pg2600.converter.log                       0%[                                                                                   ] 317.96K   476KB/s               pg2600.converter.log                       2%[=>                                                                                 ]   1.07M  1.24MB/s               pg2600.converter.log                       4%[==>                                                                                ]   1.80M  1.69MB/s               pg2600.converter.log                       6%[====>                                                                              ]   2.38M  1.83MB/s               pg2600.converter.log                      13%[=========>                                                                         ]   5.15M  3.43MB/s               pg2600.converter.log                      17%[=============>                                                                     ]   6.80M  4.00MB/s               pg2600.converter.log                      21%[=================>                                                                 ]   8.50M  4.47MB/s               pg2600.converter.log                      26%[====================>                                                              ]  10.21M  4.85MB/s               pg2600.converter.log                      30%[=======================>                                                           ]  11.75M  5.06MB/s               pg2600.converter.log                      34%[===========================>                                                       ]  13.49M  5.35MB/s               pg2600.converter.log                      36%[=============================>                                                     ]  14.27M  4.99MB/s               pg2600.converter.log                      45%[====================================>                                              ]  17.71M  5.79MB/s    eta 4s     pg2600.converter.log                      49%[========================================>                                          ]  19.56M  6.00MB/s    eta 4s     pg2600.converter.log                      54%[============================================>                                      ]  21.45M  6.20MB/s    eta 4s     pg2600.converter.log                      59%[================================================>                                  ]  23.31M  6.33MB/s    eta 4s     pg2600.converter.log                      64%[====================================================>                              ]  25.23M  6.77MB/s    eta 4s     pg2600.converter.log                      69%[========================================================>                          ]  27.19M  7.23MB/s    eta 2s     pg2600.converter.log                      71%[==========================================================>                        ]  28.02M  7.15MB/s    eta 2s     pg2600.converter.log                      80%[==================================================================>                ]  31.66M  7.98MB/s    eta 2s     pg2600.converter.log                      86%[======================================================================>            ]  33.66M  8.33MB/s    eta 2s     pg2600.converter.log                      91%[==========================================================================>        ]  35.70M  8.61MB/s    eta 2s     pg2600.converter.log                      96%[==============================================================================>    ]  37.71M  8.81MB/s    eta 0s     pg2600.converter.log                     100%[==================================================================================>]  39.13M  8.91MB/s    in 5.3s    
+
+2024-04-18 15:40:32 (7.33 MB/s) - ‘/otus4/pg2600.converter.log’ saved [41034307/41034307]
+
+]0;root@zfs:~[root@zfs ~]# ls -l /otus*
+/otus1:
+total 22075
+-rw-r--r--. 1 root root 41034307 Apr  2 07:54 pg2600.converter.log
+
+/otus2:
+total 17997
+-rw-r--r--. 1 root root 41034307 Apr  2 07:54 pg2600.converter.log
+
+/otus3:
+total 10961
+-rw-r--r--. 1 root root 41034307 Apr  2 07:54 pg2600.converter.log
+
+/otus4:
+total 40100
+-rw-r--r--. 1 root root 41034307 Apr  2 07:54 pg2600.converter.log
+]0;root@zfs:~[root@zfs ~]# zfs list
+NAME    USED  AVAIL     REFER  MOUNTPOINT
+otus1  21.7M   330M     21.6M  /otus1
+otus2  17.7M   334M     17.6M  /otus2
+otus3  10.8M   341M     10.7M  /otus3
+otus4  39.3M   313M     39.2M  /otus4
+]0;root@zfs:~[root@zfs ~]# zfs get all | grep compressratio | grep -v ref
+otus1  compressratio         1.82x                  -
+otus2  compressratio         2.23x                  -
+otus3  compressratio         3.66x                  -
+otus4  compressratio         1.00x                  -
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# pwd
+/root
+]0;root@zfs:~[root@zfs ~]# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
+--2024-04-18 15:55:55--  https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download
+Resolving drive.usercontent.google.com (drive.usercontent.google.com)... 108.177.14.132, 2a00:1450:4010:c1e::84
+Connecting to drive.usercontent.google.com (drive.usercontent.google.com)|108.177.14.132|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7275140 (6.9M) [application/octet-stream]
+Saving to: ‘archive.tar.gz’
+
+archive.tar.gz                             0%[                                                                                   ]       0  --.-KB/s               archive.tar.gz                             7%[=====>                                                                             ] 565.90K  2.75MB/s               archive.tar.gz                            29%[=======================>                                                           ]   2.03M  4.78MB/s               archive.tar.gz                            66%[======================================================>                            ]   4.60M  7.35MB/s               archive.tar.gz                            93%[============================================================================>      ]   6.46M  7.78MB/s               archive.tar.gz                           100%[==================================================================================>]   6.94M  7.87MB/s    in 0.9s    
+
+2024-04-18 15:56:03 (7.87 MB/s) - ‘archive.tar.gz’ saved [7275140/7275140]
+
+]0;root@zfs:~[root@zfs ~]# tar -xzvf archive.tar.gz
+zpoolexport/
+zpoolexport/filea
+zpoolexport/fileb
+]0;root@zfs:~[root@zfs ~]# zpool list
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+otus1   480M  21.7M   458M        -         -     0%     4%  1.00x    ONLINE  -
+otus2   480M  17.7M   462M        -         -     0%     3%  1.00x    ONLINE  -
+otus3   480M  10.8M   469M        -         -     0%     2%  1.00x    ONLINE  -
+otus4   480M  39.3M   441M        -         -     0%     8%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zpool import -d zpoolexport/
+   pool: otus
+     id: 6554193320433390805
+  state: ONLINE
+status: Some supported features are not enabled on the pool.
+	(Note that they may be intentionally disabled if the
+	'compatibility' property is set.)
+ action: The pool can be imported using its name or numeric identifier, though
+	some features will not be available without an explicit 'zpool upgrade'.
+ config:
+
+	otus                         ONLINE
+	  mirror-0                   ONLINE
+	    /root/zpoolexport/filea  ONLINE
+	    /root/zpoolexport/fileb  ONLINE
+]0;root@zfs:~[root@zfs ~]# zpool import -d zpoolexport/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clist[K
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+otus1   480M  21.7M   458M        -         -     0%     4%  1.00x    ONLINE  -
+otus2   480M  17.7M   462M        -         -     0%     3%  1.00x    ONLINE  -
+otus3   480M  10.8M   469M        -         -     0%     2%  1.00x    ONLINE  -
+otus4   480M  39.3M   441M        -         -     0%     8%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zpool import -d zpoolexport/ otus
+]0;root@zfs:~[root@zfs ~]# zpool import -d zpoolexport/ otus[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clist[K
+NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+otus    480M  2.21M   478M        -         -     0%     0%  1.00x    ONLINE  -
+otus1   480M  21.7M   458M        -         -     0%     4%  1.00x    ONLINE  -
+otus2   480M  17.7M   462M        -         -     0%     3%  1.00x    ONLINE  -
+otus3   480M  10.8M   469M        -         -     0%     2%  1.00x    ONLINE  -
+otus4   480M  39.3M   441M        -         -     0%     8%  1.00x    ONLINE  -
+]0;root@zfs:~[root@zfs ~]# zpool sttaus[1Paus[Ctus
+  pool: otus
+ state: ONLINE
+status: Some supported and requested features are not enabled on the pool.
+	The pool can still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+	the pool may no longer be accessible by software that does not support
+	the features. See zpool-features(7) for details.
+config:
+
+	NAME                         STATE     READ WRITE CKSUM
+	otus                         ONLINE       0     0     0
+	  mirror-0                   ONLINE       0     0     0
+	    /root/zpoolexport/filea  ONLINE       0     0     0
+	    /root/zpoolexport/fileb  ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: otus1
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	otus1       ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: otus2
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	otus2       ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+	    sde     ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: otus3
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	otus3       ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdf     ONLINE       0     0     0
+	    sdg     ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: otus4
+ state: ONLINE
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	otus4       ONLINE       0     0     0
+	  mirror-0  ONLINE       0     0     0
+	    sdh     ONLINE       0     0     0
+	    sdi     ONLINE       0     0     0
+
+errors: No known data errors
+]0;root@zfs:~[root@zfs ~]# zfs get all otus
+NAME  PROPERTY              VALUE                  SOURCE
+otus  type                  filesystem             -
+otus  creation              Fri May 15  4:00 2020  -
+otus  used                  2.04M                  -
+otus  available             350M                   -
+otus  referenced            24K                    -
+otus  compressratio         1.00x                  -
+otus  mounted               yes                    -
+otus  quota                 none                   default
+otus  reservation           none                   default
+otus  recordsize            128K                   local
+otus  mountpoint            /otus                  default
+otus  sharenfs              off                    default
+otus  checksum              sha256                 local
+otus  compression           zle                    local
+otus  atime                 on                     default
+otus  devices               on                     default
+otus  exec                  on                     default
+otus  setuid                on                     default
+otus  readonly              off                    default
+otus  zoned                 off                    default
+otus  snapdir               hidden                 default
+otus  aclmode               discard                default
+otus  aclinherit            restricted             default
+otus  createtxg             1                      -
+otus  canmount              on                     default
+otus  xattr                 on                     default
+otus  copies                1                      default
+otus  version               5                      -
+otus  utf8only              off                    -
+otus  normalization         none                   -
+otus  casesensitivity       sensitive              -
+otus  vscan                 off                    default
+otus  nbmand                off                    default
+otus  sharesmb              off                    default
+otus  refquota              none                   default
+otus  refreservation        none                   default
+otus  guid                  14592242904030363272   -
+otus  primarycache          all                    default
+otus  secondarycache        all                    default
+otus  usedbysnapshots       0B                     -
+otus  usedbydataset         24K                    -
+otus  usedbychildren        2.01M                  -
+otus  usedbyrefreservation  0B                     -
+otus  logbias               latency                default
+otus  objsetid              54                     -
+otus  dedup                 off                    default
+otus  mlslabel              none                   default
+otus  sync                  standard               default
+otus  dnodesize             legacy                 default
+otus  refcompressratio      1.00x                  -
+otus  written               24K                    -
+otus  logicalused           1020K                  -
+otus  logicalreferenced     12K                    -
+otus  volmode               default                default
+otus  filesystem_limit      none                   default
+otus  snapshot_limit        none                   default
+otus  filesystem_count      none                   default
+otus  snapshot_count        none                   default
+otus  snapdev               hidden                 default
+otus  acltype               off                    default
+otus  context               none                   default
+otus  fscontext             none                   default
+otus  defcontext            none                   default
+otus  rootcontext           none                   default
+otus  relatime              off                    default
+otus  redundant_metadata    all                    default
+otus  overlay               on                     default
+otus  encryption            off                    default
+otus  keylocation           none                   default
+otus  keyformat             none                   default
+otus  pbkdf2iters           0                      default
+otus  special_small_blocks  0                      default
+]0;root@zfs:~[root@zfs ~]# zfs get available otus
+NAME  PROPERTY   VALUE  SOURCE
+otus  available  350M   -
+]0;root@zfs:~[root@zfs ~]# ls
+[0m[38;5;9marchive.tar.gz[0m  typescript  [38;5;33mzpoolexport[0m
+]0;root@zfs:~[root@zfs ~]# wget -O otus_task2.file --no-check-certificate https://drive.usercontent.google.com/download?id=1wgxjih8YZ-cqLqaZVa0lA3h3Y029c3oI&export=download
+[1] 45302
+]0;root@zfs:~[root@zfs ~]# 
+Redirecting output to ‘wget-log’.
+
+]0;root@zfs:~[1]+  Done                    wget -O otus_task2.file --no-check-certificate https://drive.usercontent.google.com/download?id=1wgxjih8YZ-cqLqaZVa0lA3h3Y029c3oI
+[root@zfs ~]# 
+]0;root@zfs:~[root@zfs ~]# ls
+[0m[38;5;9marchive.tar.gz[0m  otus_task2.file  typescript  wget-log  [38;5;33mzpoolexport[0m
+]0;root@zfs:~[root@zfs ~]# zfs receive otus/test@today < otus_task2.file
+]0;root@zfs:~[root@zfs ~]# find /otus/test -name "secret_message"
+/otus/test/task1/file_mess/secret_message
+]0;root@zfs:~[root@zfs ~]# cat /otus/test/task1/file_mess/secret_message
+https://otus.ru/lessons/linux-hl/
+
+]0;root@zfs:~[root@zfs ~]# exit
+exit
+
+Script done on 2024-04-18 16:43:05+00:00
